@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1100.0" style="-fx-background-color: #202020;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Overview">
+   <top>
+      <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label alignment="CENTER" text="Appointment Scheduling System" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font size="24.0" />
+               </font>
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+            </Label>
+            <Region HBox.hgrow="ALWAYS" />
+            <Button mnemonicParsing="false" style="-fx-background-color: #474747; -fx-text-fill: #fff;" text="Reports">
+               <HBox.margin>
+                  <Insets right="10.0" />
+               </HBox.margin>
+               <font>
+                  <Font name="Roboto Light" size="18.0" />
+               </font></Button>
+         </children>
+         <BorderPane.margin>
+            <Insets left="50.0" right="50.0" />
+         </BorderPane.margin>
+      </HBox>
+   </top>
+   <center>
+      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+         <children>
+            <VBox prefHeight="328.0" prefWidth="1150.0">
+               <children>
+                  <Label text="Customers" textFill="WHITE">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                     <opaqueInsets>
+                        <Insets left="20.0" />
+                     </opaqueInsets>
+                  </Label>
+                  <Pane prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <TableView fx:id="customersTableView" prefHeight="200.0" prefWidth="579.0" />
+                     </children>
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin></Pane>
+                  <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Button mnemonicParsing="false" style="-fx-background-color: #474747; -fx-text-fill: #fff;" text="Add Appointment">
+                           <HBox.margin>
+                              <Insets right="10.0" />
+                           </HBox.margin>
+                        </Button>
+                        <Button mnemonicParsing="false" onAction="#onActionDisplayAddCustomer" style="-fx-background-color: #474747; -fx-text-fill: #fff;" text="Add Customer">
+                           <HBox.margin>
+                              <Insets right="10.0" />
+                           </HBox.margin></Button>
+                        <Button mnemonicParsing="false" onAction="#onActionDisplayModifyCustomer" style="-fx-background-color: #474747; -fx-text-fill: #fff;" text="Update Customer" />
+                        <Button mnemonicParsing="false" style="-fx-background-color: #474747; -fx-text-fill: #fff;" text="Delete Customer">
+                           <HBox.margin>
+                              <Insets left="10.0" />
+                           </HBox.margin></Button>
+                     </children>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </HBox>
+               </children>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <VBox.margin>
+                  <Insets left="50.0" />
+               </VBox.margin>
+            </VBox>
+            <VBox prefHeight="369.0" prefWidth="950.0">
+               <VBox.margin>
+                  <Insets left="50.0" />
+               </VBox.margin>
+               <children>
+                  <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Label text="Appointments" textFill="WHITE">
+                           <font>
+                              <Font name="Roboto" size="24.0" />
+                           </font>
+                        </Label>
+                        <Region HBox.hgrow="ALWAYS" />
+                        <HBox alignment="CENTER" prefHeight="99.0" prefWidth="453.0">
+                           <children>
+                              <RadioButton mnemonicParsing="false" text="View All" textFill="WHITE">
+                                 <font>
+                                    <Font name="Roboto Thin" size="16.0" />
+                                 </font>
+                                 <padding>
+                                    <Insets right="10.0" />
+                                 </padding>
+                              </RadioButton>
+                              <RadioButton layoutX="10.0" layoutY="10.0" mnemonicParsing="false" text="By Week" textFill="WHITE">
+                                 <font>
+                                    <Font name="Roboto Thin" size="16.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets />
+                                 </HBox.margin>
+                                 <padding>
+                                    <Insets right="20.0" />
+                                 </padding>
+                              </RadioButton>
+                              <RadioButton layoutX="92.0" layoutY="10.0" mnemonicParsing="false" text="By Month" textFill="WHITE">
+                                 <font>
+                                    <Font name="Roboto Thin" size="16.0" />
+                                 </font>
+                              </RadioButton>
+                           </children>
+                        </HBox>
+                     </children>
+                  </HBox>
+                  <Pane prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <TableView fx:id="appointmentsTableView" layoutY="-35.0" prefHeight="235.0" prefWidth="975.0" />
+                     </children>
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </Pane>
+                  <HBox alignment="CENTER_LEFT" prefHeight="46.0" prefWidth="950.0">
+                     <children>
+                        <Button mnemonicParsing="false" style="-fx-background-color: #474747; -fx-text-fill: #fff;" text="Update Appointment" />
+                        <Button mnemonicParsing="false" style="-fx-background-color: #474747; -fx-text-fill: #fff;" text="Delete Appointment">
+                           <HBox.margin>
+                              <Insets left="10.0" />
+                           </HBox.margin>
+                        </Button>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </children>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
+      </VBox>
+   </center>
+   <bottom>
+      <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="600.0" BorderPane.alignment="CENTER" />
+   </bottom>
+</BorderPane>

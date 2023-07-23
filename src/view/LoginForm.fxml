@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane prefHeight="320.0" prefWidth="600.0" style="-fx-background-color: #202020;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginForm">
+   <center>
+      <VBox alignment="CENTER" prefHeight="193.0" prefWidth="600.0">
+         <children>
+            <Label fx:id="title" alignment="CENTER" contentDisplay="CENTER" text="Appointment Scheduling System" textFill="WHITE">
+               <font>
+                  <Font name="Roboto" size="24.0" />
+               </font>
+            </Label>
+            <VBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="600.0" style="-fx-max-width: 320px;">
+               <children>
+                  <Label fx:id="usernameLabel" alignment="BASELINE_LEFT" text="Username" textFill="WHITE">
+                     <font>
+                        <Font name="Roboto" size="18.0" />
+                     </font>
+                     <padding>
+                        <Insets bottom="10.0" />
+                     </padding>
+                  </Label>
+                  <TextField fx:id="username" prefWidth="558.0" />
+               </children>
+               <VBox.margin>
+                  <Insets left="200.0" right="200.0" top="20.0" />
+               </VBox.margin>
+            </VBox>
+            <VBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="600.0" style="-fx-max-width: 320px;">
+               <children>
+                  <Label fx:id="passwordLabel" alignment="BASELINE_LEFT" text="Password" textFill="WHITE">
+                     <font>
+                        <Font name="Roboto" size="18.0" />
+                     </font>
+                     <padding>
+                        <Insets bottom="10.0" />
+                     </padding>
+                  </Label>
+                  <TextField fx:id="password" prefWidth="558.0" style="-fx-max-width: 520px;" />
+               </children>
+               <VBox.margin>
+                  <Insets left="200.0" right="200.0" top="20.0" />
+               </VBox.margin>
+            </VBox>
+            <Button fx:id="loginBtn" alignment="CENTER" mnemonicParsing="false" onAction="#onUserLogin" prefHeight="24.0" prefWidth="200.0" style="-fx-background-color: #474747; -fx-text-fill: #fff; -fx-max-width: 320px;" text="Login">
+               <VBox.margin>
+                  <Insets left="200.0" right="200.0" top="20.0" />
+               </VBox.margin>
+               <font>
+                  <Font name="Roboto" size="14.0" />
+               </font>
+            </Button>
+            <Label fx:id="errorMsg" text="Username or password is incorrect" textFill="#f40000">
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin></Label>
+         </children>
+      </VBox>
+   </center>
+   <bottom>
+      <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label fx:id="zoneIdLabel" text="ZoneId:" textFill="WHITE">
+               <font>
+                  <Font name="Roboto Thin" size="16.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="10.0" />
+               </HBox.margin>
+            </Label>
+            <Label fx:id="zoneIdText" textFill="WHITE">
+               <font>
+                  <Font name="Roboto Thin" size="16.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="10.0" />
+               </HBox.margin>
+            </Label>
+         </children>
+      </HBox>
+   </bottom>
+</BorderPane>

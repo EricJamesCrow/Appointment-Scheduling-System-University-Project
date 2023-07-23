@@ -1,0 +1,33 @@
+### IntelliJ IDEA ###
+.idea/*
+sdk/*
+mysql-connector-j-8.1.0/*
+out/*
+!**/src/main/**/out/
+!**/src/test/**/out/
+Java Application Development.iml
+
+### Eclipse ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+bin/
+!**/src/main/**/bin/
+!**/src/test/**/bin/
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+### VS Code ###
+.vscode/
+
+### Mac OS ###
+.DS_Store
