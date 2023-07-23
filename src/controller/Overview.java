@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class Overview implements Initializable {
@@ -97,7 +98,6 @@ public class Overview implements Initializable {
 
     public void onActionDisplayModifyCustomer(ActionEvent actionEvent) throws IOException {
         try {
-            System.out.println(customersTableView.getSelectionModel().getSelectedItem());
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("../view/ModifyCustomer.fxml"));
             loader.load();
@@ -108,10 +108,41 @@ public class Overview implements Initializable {
             Parent scene = loader.getRoot();
             stage.setScene(new Scene(scene));
             stage.show();
-        } catch(NullPointerException e) {
+        } catch(NullPointerException | SQLException e) {
+            System.out.println(e);
             Alert alert2 = new Alert(Alert.AlertType.ERROR);
             alert2.setContentText("Must select a customer to update");
             alert2.showAndWait();
+        }
+    }
+
+    public void onActionDeleteCustomer(ActionEvent actionEvent) throws SQLException{
+        try {
+            ObservableList customers = (ObservableList) customersTableView.getSelectionModel().getSelectedItem();
+            String customerId = customers.get(0).toString();
+            String checkForeignKey = "SELECT * FROM appointments where Customer_ID = ?";
+            PreparedStatement psCheck = JDBC.connection.prepareStatement(checkForeignKey);
+            psCheck.setString(1, customerId);
+            ResultSet rs = psCheck.executeQuery();
+            if(rs.next()) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setContentText("Cannot delete customer with scheduled appointment");
+                alert.showAndWait();
+            } else {
+                String sql = "DELETE FROM customers WHERE customer_id = ?";
+                PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+                ps.setString(1, customerId);
+                ps.executeUpdate();
+                buildCustomerData();
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setContentText("Customer "+customerId+" deleted!");
+                alert.showAndWait();
+            }
+        } catch(NullPointerException e) {
+            System.out.println(e);
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Must select a customer to delete");
+            alert.showAndWait();
         }
     }
 

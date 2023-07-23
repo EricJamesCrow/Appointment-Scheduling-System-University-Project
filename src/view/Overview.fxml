@@ -63,7 +63,7 @@
                               <Insets right="10.0" />
                            </HBox.margin></Button>
                         <Button mnemonicParsing="false" onAction="#onActionDisplayModifyCustomer" style="-fx-background-color: #474747; -fx-text-fill: #fff;" text="Update Customer" />
-                        <Button mnemonicParsing="false" style="-fx-background-color: #474747; -fx-text-fill: #fff;" text="Delete Customer">
+                        <Button mnemonicParsing="false" onAction="#onActionDeleteCustomer" style="-fx-background-color: #474747; -fx-text-fill: #fff;" text="Delete Customer">
                            <HBox.margin>
                               <Insets left="10.0" />
                            </HBox.margin></Button>
