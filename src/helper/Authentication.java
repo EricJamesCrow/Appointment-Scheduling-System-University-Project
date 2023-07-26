@@ -8,6 +8,12 @@ import java.sql.SQLException;
 
 public class Authentication {
 
+    private static User currentUser = null;
+
+    public static User getCurrentUser() {
+        return currentUser;
+    }
+
     public static User login(String userName, String password) throws SQLException {
         User user = null;
         String sql = "SELECT * FROM users WHERE User_Name = ? AND Password = ?";
@@ -19,6 +25,7 @@ public class Authentication {
             int userId = rs.getInt("User_ID");
             String name = rs.getString("User_Name");
             user = new User(userId, name);
+            currentUser = user;
         } else {
         }
         return user;

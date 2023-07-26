@@ -8,6 +8,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -27,8 +28,16 @@ import java.util.ResourceBundle;
 public class Overview implements Initializable {
     public TableView customersTableView;
     public TableView appointmentsTableView;
+    public Button reportsBtn;
+    public Button addCustomerBtn;
+    public Button updateCustomerBtn;
+    public Button deleteCustomerBtn;
+    public Button addApptBtn;
+    public Button updateApptBtn;
+    public Button deleteApptBtn;
     private ObservableList<ObservableList> customersData;
     private ObservableList<ObservableList> appointmentsData;
+    private ObservableList<Button> overviewBtns;;
     /**
      * the stage the application is running in
      */
@@ -146,11 +155,40 @@ public class Overview implements Initializable {
         }
     }
 
+    public void onActionAddAppointment(ActionEvent actionEvent) throws IOException {
+        stage = (Stage)((Button)actionEvent.getSource()).getScene().getWindow();
+        scene = FXMLLoader.load(getClass().getResource("../view/AddAppointment.fxml"));
+        stage.setScene(new Scene(scene));
+        stage.show();
+    }
+
+    public void onActionDeleteAppointment(ActionEvent actionEvent) throws SQLException {
+        try {
+            ObservableList appointments = (ObservableList) appointmentsTableView.getSelectionModel().getSelectedItem();
+            String appointmentId = appointments.get(0).toString();
+            String appointmentType = appointments.get(4).toString();
+            String sql = "DELETE FROM appointments WHERE Appointment_ID = ?";
+            PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+            ps.setString(1, appointmentId);
+            ps.executeUpdate();
+            buildAppointmentsData();
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setContentText("Appointment "+appointmentId+" deleted!\nType of appointment: "+appointmentType);
+            alert.showAndWait();
+        } catch(NullPointerException e) {
+            System.out.println(e);
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Must select a customer to delete");
+            alert.showAndWait();
+        }
+    }
+
     public void buildAppointmentsData() {
         /**
          *
          *  Source: https://blog.ngopal.com.np/2011/10/19/dyanmic-tableview-data-from-database/
          *  */
+        appointmentsTableView.getColumns().clear();
         appointmentsData = FXCollections.observableArrayList();
         try {
             String sql = "SELECT Appointment_ID, Title, Description, Location, " +
@@ -201,5 +239,15 @@ public class Overview implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         buildCustomerData();
         buildAppointmentsData();
+
+        overviewBtns = FXCollections.observableArrayList(reportsBtn, addCustomerBtn, updateCustomerBtn, deleteCustomerBtn, addApptBtn, updateApptBtn, deleteApptBtn);
+
+        for(Button button : overviewBtns) {
+            button.setOnMouseEntered(e -> {
+                button.setStyle("-fx-background-color: #5E5E5E; cursor: pointer;");
+                button.setCursor(Cursor.HAND);
+            });
+            button.setOnMouseExited(e -> button.setStyle("-fx-background-color: #474747; -fx-text-fill: #fff;"));
+        }
     }
 }

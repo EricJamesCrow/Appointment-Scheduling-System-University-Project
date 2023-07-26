@@ -1,14 +1,123 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="controller.AddAppointment"
-            prefHeight="400.0" prefWidth="600.0">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="600.0" style="-fx-background-color: #202020;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AddAppointment">
+    <center>
+        <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+            <children>
+                <Label text="Add Appointment" textFill="WHITE">
+                    <font>
+                        <Font name="Roboto Light" size="20.0" />
+                    </font>
+                </Label>
+                <Region prefHeight="22.0" prefWidth="600.0" />
+                <GridPane alignment="CENTER" hgap="10" vgap="10">
+                    <Label text="Customer ID" textFill="WHITE" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                        <font>
+                            <Font name="Roboto" size="18.0" />
+                        </font>
+                    </Label>
 
-</AnchorPane>
+                    <Label text="User ID" textFill="WHITE" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                        <font>
+                            <Font name="Roboto" size="18.0" />
+                        </font>
+                    </Label>
+                    <TextField fx:id="userId" disable="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+                    <Label text="Title" textFill="WHITE" GridPane.columnIndex="0" GridPane.rowIndex="2">
+                        <font>
+                            <Font name="Roboto" size="18.0" />
+                        </font>
+                    </Label>
+                    <TextField fx:id="title" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+
+                    <Label text="Description" textFill="WHITE" GridPane.columnIndex="0" GridPane.rowIndex="3">
+                        <font>
+                            <Font name="Roboto" size="18.0" />
+                        </font>
+                    </Label>
+                    <TextField fx:id="description" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+               <Label layoutX="170.0" layoutY="117.0" text="Location" textFill="WHITE" GridPane.rowIndex="4">
+                  <font>
+                     <Font name="Roboto" size="18.0" />
+                  </font>
+               </Label>
+               <ComboBox fx:id="countryComboBox" onAction="#onActionAddFirstLevelDivisions" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+               <Label layoutX="170.0" layoutY="155.0" text="Contact" textFill="WHITE" GridPane.rowIndex="5">
+                  <font>
+                     <Font name="Roboto" size="18.0" />
+                  </font>
+               </Label>
+               <ComboBox fx:id="stateComboBox" layoutX="300.0" layoutY="153.0" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+               <ComboBox fx:id="contactComboBox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+               <Label layoutX="125.0" layoutY="193.0" text="Type" textFill="WHITE" GridPane.rowIndex="6">
+                  <font>
+                     <Font name="Roboto" size="18.0" />
+                  </font>
+               </Label>
+               <TextField fx:id="type" layoutX="235.0" layoutY="117.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+               <Label layoutX="125.0" layoutY="231.0" text="Start Date and Time" textFill="WHITE" GridPane.rowIndex="7">
+                  <font>
+                     <Font name="Roboto" size="18.0" />
+                  </font>
+               </Label>
+               <Label layoutX="95.0" layoutY="269.0" text="End Date and Time" textFill="WHITE" GridPane.rowIndex="8">
+                  <font>
+                     <Font name="Roboto" size="18.0" />
+                  </font>
+               </Label>
+               <DatePicker fx:id="startDate" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+               <DatePicker fx:id="endDate" layoutX="253.0" layoutY="261.0" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+               <TextField fx:id="startTime" promptText="HH:MM:SS" GridPane.columnIndex="2" GridPane.rowIndex="7" />
+               <TextField fx:id="endTime" layoutX="437.0" layoutY="261.0" promptText="HH:MM:SS" GridPane.columnIndex="2" GridPane.rowIndex="8" />
+               <ComboBox fx:id="customerIdComboBox" prefWidth="150.0" GridPane.columnIndex="1" />
+               <columnConstraints>
+                  <ColumnConstraints />
+                  <ColumnConstraints />
+                  <ColumnConstraints minWidth="10.0" prefWidth="100.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints />
+                  <RowConstraints />
+                  <RowConstraints />
+                  <RowConstraints />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" />
+               </rowConstraints>
+                </GridPane>
+            <Label fx:id="errorMsg" text="Please fill out all fields." textFill="#ff0b0b">
+               <VBox.margin>
+                  <Insets bottom="-10.0" top="20.0" />
+               </VBox.margin></Label>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#onAddAppointment" style="-fx-background-color: #474747; -fx-text-fill: #fff;" text="Save">
+                     <HBox.margin>
+                        <Insets right="20.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font name="Roboto" size="14.0" />
+                     </font>
+                  </Button>
+                  <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#onActionDisplayMenu" style="-fx-background-color: #474747; -fx-text-fill: #fff;" text="Cancel">
+                     <font>
+                        <Font name="Roboto" size="14.0" />
+                     </font>
+                  </Button>
+               </children>
+            </HBox>
+            </children>
+            <BorderPane.margin>
+                <Insets top="50.0" />
+            </BorderPane.margin>
+        </VBox>
+    </center>
+</BorderPane>

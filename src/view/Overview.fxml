@@ -18,7 +18,7 @@
                </HBox.margin>
             </Label>
             <Region HBox.hgrow="ALWAYS" />
-            <Button mnemonicParsing="false" style="-fx-background-color: #474747; -fx-text-fill: #fff;" text="Reports">
+            <Button fx:id="reportsBtn" mnemonicParsing="false" style="-fx-background-color: #474747; -fx-text-fill: #fff;" text="Reports">
                <HBox.margin>
                   <Insets right="10.0" />
                </HBox.margin>
@@ -53,17 +53,12 @@
                      </VBox.margin></Pane>
                   <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
                      <children>
-                        <Button mnemonicParsing="false" style="-fx-background-color: #474747; -fx-text-fill: #fff;" text="Add Appointment">
-                           <HBox.margin>
-                              <Insets right="10.0" />
-                           </HBox.margin>
-                        </Button>
-                        <Button mnemonicParsing="false" onAction="#onActionDisplayAddCustomer" style="-fx-background-color: #474747; -fx-text-fill: #fff;" text="Add Customer">
+                        <Button fx:id="addCustomerBtn" mnemonicParsing="false" onAction="#onActionDisplayAddCustomer" style="-fx-background-color: #474747; -fx-text-fill: #fff;" text="Add Customer">
                            <HBox.margin>
                               <Insets right="10.0" />
                            </HBox.margin></Button>
-                        <Button mnemonicParsing="false" onAction="#onActionDisplayModifyCustomer" style="-fx-background-color: #474747; -fx-text-fill: #fff;" text="Update Customer" />
-                        <Button mnemonicParsing="false" onAction="#onActionDeleteCustomer" style="-fx-background-color: #474747; -fx-text-fill: #fff;" text="Delete Customer">
+                        <Button fx:id="updateCustomerBtn" mnemonicParsing="false" onAction="#onActionDisplayModifyCustomer" style="-fx-background-color: #474747; -fx-text-fill: #fff;" text="Update Customer" />
+                        <Button fx:id="deleteCustomerBtn" mnemonicParsing="false" onAction="#onActionDeleteCustomer" style="-fx-background-color: #474747; -fx-text-fill: #fff;" text="Delete Customer">
                            <HBox.margin>
                               <Insets left="10.0" />
                            </HBox.margin></Button>
@@ -133,10 +128,15 @@
                   </Pane>
                   <HBox alignment="CENTER_LEFT" prefHeight="46.0" prefWidth="950.0">
                      <children>
-                        <Button mnemonicParsing="false" style="-fx-background-color: #474747; -fx-text-fill: #fff;" text="Update Appointment" />
-                        <Button mnemonicParsing="false" style="-fx-background-color: #474747; -fx-text-fill: #fff;" text="Delete Appointment">
+                        <Button fx:id="addApptBtn" mnemonicParsing="false" onAction="#onActionAddAppointment" style="-fx-background-color: #474747; -fx-text-fill: #fff;" text="Add Appointment">
                            <HBox.margin>
-                              <Insets left="10.0" />
+                              <Insets right="10.0" />
+                           </HBox.margin>
+                        </Button>
+                        <Button fx:id="updateApptBtn" mnemonicParsing="false" style="-fx-background-color: #474747; -fx-text-fill: #fff;" text="Update Appointment" />
+                        <Button fx:id="deleteApptBtn" mnemonicParsing="false" onAction="#onActionDeleteAppointment" style="-fx-background-color: #474747; -fx-text-fill: #fff;" text="Delete Appointment">
+                           <HBox.margin>
+                              <Insets left="10.0" right="10.0" />
                            </HBox.margin>
                         </Button>
                      </children>
