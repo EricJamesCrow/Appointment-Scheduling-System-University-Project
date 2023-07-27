@@ -125,7 +125,7 @@ public class UpdateAppointment implements Initializable {
             }
             String start = startDateText + " " + startTimeText;
             String end = endDateText + " " + endTimeText;
-            boolean checkOverlappingAppointments = TimeZones.checkOverlappingAppointments(start, end);
+            boolean checkOverlappingAppointments = TimeZones.checkOverlappingUpdateAppointments(appointmentId, start, end);
             if (!checkOverlappingAppointments) {
                 errorMsg.setVisible(true);
                 errorMsg.setText("Cannot schedule an appointment that overlaps with another.");
@@ -168,7 +168,6 @@ public class UpdateAppointment implements Initializable {
     }
 
     public void sendAppointment(ObservableList appointment) throws SQLException {
-        System.out.println(appointment);
         appointmentIdTextBox.setText(appointment.get(0).toString());
         customerIdComboBox.getSelectionModel().select(Integer.parseInt(appointment.get(7).toString()) - 1);
         userId.setText(appointment.get(8).toString());

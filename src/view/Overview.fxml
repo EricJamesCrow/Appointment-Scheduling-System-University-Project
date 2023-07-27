@@ -46,7 +46,7 @@
                   </Label>
                   <Pane prefHeight="200.0" prefWidth="200.0">
                      <children>
-                        <TableView fx:id="customersTableView" prefHeight="200.0" prefWidth="579.0" />
+                        <TableView fx:id="customersTableView" prefHeight="200.0" prefWidth="618.0" />
                      </children>
                      <VBox.margin>
                         <Insets top="10.0" />
@@ -90,15 +90,18 @@
                         <Region HBox.hgrow="ALWAYS" />
                         <HBox alignment="CENTER" prefHeight="99.0" prefWidth="453.0">
                            <children>
-                              <RadioButton mnemonicParsing="false" text="View All" textFill="WHITE">
+                              <RadioButton fx:id="viewAllRadioBtn" mnemonicParsing="false" onAction="#onActionViewAllAppointmentsData" selected="true" text="View All" textFill="WHITE">
                                  <font>
                                     <Font name="Roboto Thin" size="16.0" />
                                  </font>
                                  <padding>
                                     <Insets right="10.0" />
                                  </padding>
+                                 <toggleGroup>
+                                    <ToggleGroup fx:id="toggleGroup" />
+                                 </toggleGroup>
                               </RadioButton>
-                              <RadioButton layoutX="10.0" layoutY="10.0" mnemonicParsing="false" text="By Week" textFill="WHITE">
+                              <RadioButton fx:id="byWeekRadioBtn" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#onActionViewAppointmentsByWeek" text="By Week" textFill="WHITE" toggleGroup="$toggleGroup">
                                  <font>
                                     <Font name="Roboto Thin" size="16.0" />
                                  </font>
@@ -109,7 +112,7 @@
                                     <Insets right="20.0" />
                                  </padding>
                               </RadioButton>
-                              <RadioButton layoutX="92.0" layoutY="10.0" mnemonicParsing="false" text="By Month" textFill="WHITE">
+                              <RadioButton fx:id="byMonthRadioBtn" layoutX="92.0" layoutY="10.0" mnemonicParsing="false" onAction="#onActionViewAppointmentsByMonth" text="By Month" textFill="WHITE" toggleGroup="$toggleGroup">
                                  <font>
                                     <Font name="Roboto Thin" size="16.0" />
                                  </font>

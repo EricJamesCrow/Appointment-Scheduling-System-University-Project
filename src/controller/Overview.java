@@ -12,22 +12,15 @@ import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
-import javax.swing.*;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
 public class Overview implements Initializable {
@@ -40,6 +33,9 @@ public class Overview implements Initializable {
     public Button addApptBtn;
     public Button updateApptBtn;
     public Button deleteApptBtn;
+    public RadioButton viewAllRadioBtn;
+    public RadioButton byWeekRadioBtn;
+    public RadioButton byMonthRadioBtn;
     private ObservableList<ObservableList> customersData;
     private ObservableList<ObservableList> appointmentsData;
     private ObservableList<Button> overviewBtns;;
@@ -196,7 +192,21 @@ public class Overview implements Initializable {
             PreparedStatement ps = JDBC.connection.prepareStatement(sql);
             ps.setString(1, appointmentId);
             ps.executeUpdate();
-            buildAppointmentsData();
+            String sql3;
+            if (byWeekRadioBtn.isSelected()) {
+                sql3 = "SELECT Appointment_ID, Title, Description, Location, " +
+                        "Type, Start as Start_Date_and_Time, End as End_Date_and_Time, Customer_ID, " +
+                        "User_ID, Contact_ID from APPOINTMENTS where week(Start)=week(now());";
+            } else if(byMonthRadioBtn.isSelected()) {
+                sql3 = "SELECT Appointment_ID, Title, Description, Location, " +
+                        "Type, Start as Start_Date_and_Time, End as End_Date_and_Time, Customer_ID, " +
+                        "User_ID, Contact_ID from APPOINTMENTS where month(Start)=month(now());";
+            } else {
+                sql3 = "SELECT Appointment_ID, Title, Description, Location, " +
+                        "Type, Start as Start_Date_and_Time, End as End_Date_and_Time, Customer_ID, " +
+                        "User_ID, Contact_ID from APPOINTMENTS";
+            }
+            buildAppointmentsData(sql3);
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setContentText("Appointment "+appointmentId+" deleted!\nType of appointment: "+appointmentType);
             alert.showAndWait();
@@ -207,8 +217,33 @@ public class Overview implements Initializable {
             alert.showAndWait();
         }
     }
+    public void onActionViewAppointmentsByMonth(ActionEvent actionEvent) {
+        /**
+         * Source: https://ubiq.co/database-blog/how-to-get-current-week-data-in-mysql/#:~:text=It%20is%20very%20easy%20to,of%20current%20week%20in%20MySQL.&text=In%20the%20above%20query%2C%20we,week%20number%20of%20today's%20day.
+         * */
+        String sql = "SELECT Appointment_ID, Title, Description, Location, " +
+                "Type, Start as Start_Date_and_Time, End as End_Date_and_Time, Customer_ID, " +
+                "User_ID, Contact_ID from APPOINTMENTS where month(Start)=month(now());";
+        buildAppointmentsData(sql);
+    }
+    public void onActionViewAppointmentsByWeek(ActionEvent actionEvent) {
+        /**
+         * Source: https://ubiq.co/database-blog/how-to-get-current-week-data-in-mysql/#:~:text=It%20is%20very%20easy%20to,of%20current%20week%20in%20MySQL.&text=In%20the%20above%20query%2C%20we,week%20number%20of%20today's%20day.
+         * */
+        String sql = "SELECT Appointment_ID, Title, Description, Location, " +
+                "Type, Start as Start_Date_and_Time, End as End_Date_and_Time, Customer_ID, " +
+                "User_ID, Contact_ID from APPOINTMENTS where week(Start)=week(now());";
+        buildAppointmentsData(sql);
+    }
 
-    public void buildAppointmentsData() {
+    public void onActionViewAllAppointmentsData(ActionEvent actionEvent) {
+        String sql = "SELECT Appointment_ID, Title, Description, Location, " +
+                "Type, Start as Start_Date_and_Time, End as End_Date_and_Time, Customer_ID, " +
+                "User_ID, Contact_ID from APPOINTMENTS";
+        buildAppointmentsData(sql);
+    }
+
+    public void buildAppointmentsData(String sql) {
         /**
          *
          *  Source: https://blog.ngopal.com.np/2011/10/19/dyanmic-tableview-data-from-database/
@@ -216,9 +251,6 @@ public class Overview implements Initializable {
         appointmentsTableView.getColumns().clear();
         appointmentsData = FXCollections.observableArrayList();
         try {
-            String sql = "SELECT Appointment_ID, Title, Description, Location, " +
-                    "Type, Start as Start_Date_and_Time, End as End_Date_and_Time, Customer_ID, " +
-                    "User_ID, Contact_ID from APPOINTMENTS";
             PreparedStatement ps = JDBC.connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
 
@@ -267,7 +299,10 @@ public class Overview implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         buildCustomerData();
-        buildAppointmentsData();
+        String sql = "SELECT Appointment_ID, Title, Description, Location, " +
+                "Type, Start as Start_Date_and_Time, End as End_Date_and_Time, Customer_ID, " +
+                "User_ID, Contact_ID from APPOINTMENTS";
+        buildAppointmentsData(sql);
 
         overviewBtns = FXCollections.observableArrayList(reportsBtn, addCustomerBtn, updateCustomerBtn, deleteCustomerBtn, addApptBtn, updateApptBtn, deleteApptBtn);
 
