@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000.0" prefWidth="1100.0" style="-fx-background-color: #202020;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Reports">
+   <top>
+      <Label text="Reports" textFill="WHITE" BorderPane.alignment="CENTER">
+         <font>
+            <Font name="Roboto" size="36.0" />
+         </font>
+         <BorderPane.margin>
+            <Insets bottom="20.0" top="30.0" />
+         </BorderPane.margin>
+      </Label>
+   </top>
+   <center>
+      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+         <children>
+            <VBox prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <Label text="Appointments by Type" textFill="#f6f6f6">
+                     <font>
+                        <Font name="Roboto" size="24.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </Label>
+                  <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <ComboBox fx:id="appointmentsByTypeComboBox" prefWidth="150.0" />
+                        <Label text="Number of Appointments by Type: " textFill="WHITE">
+                           <font>
+                              <Font name="Roboto" size="12.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="10.0" />
+                           </HBox.margin>
+                        </Label>
+                        <Label fx:id="numberOfAppointmentsByTypeLabel" text="0" textFill="WHITE">
+                           <font>
+                              <Font name="Roboto" size="12.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <TableView fx:id="appointmentsByTypeTableView" prefHeight="200.0" prefWidth="200.0">
+                    <columns>
+                      <TableColumn prefWidth="75.0" text="C1" />
+                      <TableColumn prefWidth="75.0" text="C2" />
+                    </columns>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </TableView>
+               </children>
+               <VBox.margin>
+                  <Insets bottom="20.0" />
+               </VBox.margin></VBox>
+            <VBox layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <Label text="Appointments by Month" textFill="#f6f6f6">
+                     <font>
+                        <Font name="Roboto" size="24.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </Label>
+                  <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <ComboBox fx:id="appointmentsByMonthComboBox" prefWidth="150.0" />
+                        <Label text="Number of Appointments by Month: " textFill="WHITE">
+                           <font>
+                              <Font name="Roboto" size="12.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="10.0" />
+                           </HBox.margin>
+                        </Label>
+                        <Label fx:id="numberOfAppointmentsByMonthLabel" text="0" textFill="WHITE">
+                           <font>
+                              <Font name="Roboto" size="12.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <TableView fx:id="appointmentsByMonthTableView" prefHeight="200.0" prefWidth="200.0">
+                     <columns>
+                        <TableColumn prefWidth="75.0" text="C1" />
+                        <TableColumn prefWidth="75.0" text="C2" />
+                     </columns>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </TableView>
+               </children>
+               <VBox.margin>
+                  <Insets bottom="20.0" />
+               </VBox.margin>
+            </VBox>
+            <VBox layoutX="10.0" layoutY="220.0" prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <Label text="Appointments by Contact" textFill="#f6f6f6">
+                     <font>
+                        <Font name="Roboto" size="24.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </Label>
+                  <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <ComboBox fx:id="appointmentsByContactComboBox" prefWidth="150.0" />
+                        <Label text="Number of Appointments by Contact: " textFill="WHITE">
+                           <font>
+                              <Font name="Roboto" size="12.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="10.0" />
+                           </HBox.margin>
+                        </Label>
+                        <Label fx:id="numberOfAppointmentsByContactLabel" text="0" textFill="WHITE">
+                           <font>
+                              <Font name="Roboto" size="12.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <TableView fx:id="appointmentsByContactTableView" prefHeight="200.0" prefWidth="200.0">
+                     <columns>
+                        <TableColumn prefWidth="75.0" text="C1" />
+                        <TableColumn prefWidth="75.0" text="C2" />
+                     </columns>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </TableView>
+               </children>
+               <VBox.margin>
+                  <Insets bottom="20.0" />
+               </VBox.margin>
+            </VBox>
+            <VBox layoutX="10.0" layoutY="450.0" prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <Label text="Appointments by Customer " textFill="#f6f6f6">
+                     <font>
+                        <Font name="Roboto" size="24.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </Label>
+                  <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <ComboBox fx:id="appointmentsByCustomerComboBox" prefWidth="150.0" />
+                        <Label text="Number of Appointments by Customer: " textFill="WHITE">
+                           <font>
+                              <Font name="Roboto" size="12.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="10.0" />
+                           </HBox.margin>
+                        </Label>
+                        <Label fx:id="numberOfAppointmentsByCustomerLabel" text="0" textFill="WHITE">
+                           <font>
+                              <Font name="Roboto" size="12.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <TableView fx:id="appointmentsByCustomerTableView" prefHeight="200.0" prefWidth="200.0">
+                     <columns>
+                        <TableColumn prefWidth="75.0" text="C1" />
+                        <TableColumn prefWidth="75.0" text="C2" />
+                     </columns>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </TableView>
+               </children>
+            </VBox>
+         </children>
+         <BorderPane.margin>
+            <Insets left="20.0" right="20.0" />
+         </BorderPane.margin>
+      </VBox>
+   </center>
+   <bottom>
+      <Button mnemonicParsing="false" onAction="#onActionDisplayMenu" style="-fx-background-color: #474747; -fx-text-fill: #fff;" text="Go back" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets bottom="10.0" />
+         </BorderPane.margin></Button>
+   </bottom>
+</BorderPane>
