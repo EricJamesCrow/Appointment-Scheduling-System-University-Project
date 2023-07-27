@@ -19,6 +19,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 public class UpdateAppointment implements Initializable {
@@ -100,11 +101,12 @@ public class UpdateAppointment implements Initializable {
             throw new RuntimeException(e);
         }
     }
-    public void onAddAppointment(ActionEvent actionEvent) throws SQLException, IOException {
-        String sql = "INSERT INTO APPOINTMENTS (Title, Description, Location, Type, Start, End, Customer_ID, User_ID, " +
-                "Contact_ID) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    public void onUpdateAppointment(ActionEvent actionEvent) throws SQLException, IOException {
+        String sql = "UPDATE APPOINTMENTS SET Title = ?, Description = ?, Location = ?, Type = ?, Start = ?, End = ?, " +
+                "Customer_ID = ?, User_ID = ?, Contact_ID = ? WHERE Appointment_ID = ?";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
         try {
+            int appointmentId = Integer.parseInt(appointmentIdTextBox.getText().toString());
             String titleText = title.getText();
             String descriptionText = description.getText();
             String location = (stateComboBox.getValue().toString()).split(" ", 2)[1];
@@ -146,6 +148,7 @@ public class UpdateAppointment implements Initializable {
             ps.setInt(7, customerIdText);
             ps.setInt(8, userIdText);
             ps.setInt(9, contactIdText);
+            ps.setInt(10, appointmentId);
             int rowsAffected = ps.executeUpdate();
             if(rowsAffected > 0) {
                 stage = (Stage)((Button)actionEvent.getSource()).getScene().getWindow();
@@ -167,41 +170,57 @@ public class UpdateAppointment implements Initializable {
     public void sendAppointment(ObservableList appointment) throws SQLException {
         System.out.println(appointment);
         appointmentIdTextBox.setText(appointment.get(0).toString());
-        customerIdComboBox.setValue(appointment.get(7).toString());
+        customerIdComboBox.getSelectionModel().select(Integer.parseInt(appointment.get(7).toString()) - 1);
         userId.setText(appointment.get(8).toString());
         title.setText(appointment.get(1).toString());
         description.setText(appointment.get(2).toString());
+        contactComboBox.getSelectionModel().select(Integer.parseInt(appointment.get(9).toString()) - 1);
         type.setText(appointment.get(4).toString());
-        String customerDivisionId = appointment.get(5).toString();
-        String sql = "SELECT Country_ID FROM first_level_divisions WHERE Division_ID = ?";
+        String appointmentLocation = appointment.get(3).toString();
+        String sql = "SELECT Division_ID, Country_ID FROM first_level_divisions WHERE Division = ?";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
-        ps.setString(1, customerDivisionId);
+        ps.setString(1, appointmentLocation);
         ResultSet rs = ps.executeQuery();
-//        if(rs.next()) {
-//            countryId = rs.getInt("Country_ID");
-//            countryComboBox.getSelectionModel().select(countryId - 1);
-//        }
-//        String sql2 = "SELECT DIVISION_ID, Division FROM first_level_divisions WHERE Country_ID = ?";
-//        PreparedStatement ps2 = JDBC.connection.prepareStatement(sql2);
-//        ps2.setInt(1, countryId);
-//        ResultSet rs2 = ps2.executeQuery();
-//        System.out.println(countryId);
-//        while(rs2.next()) {
-//            String divisionID = rs2.getString("Division_ID");
-//            String division = rs2.getString("Division");
-//            String concatenatedDivisionString = divisionID + " " + division;
-//            stateOptions.add(concatenatedDivisionString);
-//            if(customerDivisionId == divisionID) {
-//
-//            }
-//        }
-//        stateComboBox.setItems(stateOptions);
-//        for(int i=0; i < stateOptions.size(); i++) {
-//            if (stateOptions.get(i).startsWith(customerDivisionId)) {
-//                stateComboBox.getSelectionModel().select(i);
-//                break;
-//            }
-//        }
+        if(rs.next()) {
+            countryComboBox.getSelectionModel().select(rs.getInt("Country_ID") - 1);
+            stateOptions.clear();
+            String countryId = Integer.toString(countryComboBox.getSelectionModel().getSelectedIndex() + 1);
+            String sql2 = "SELECT DIVISION_ID, Division FROM first_level_divisions WHERE Country_ID = ?";
+            PreparedStatement ps2 = JDBC.connection.prepareStatement(sql2);
+            ps2.setString(1, countryId);
+            ResultSet rs2 = ps2.executeQuery();
+            while(rs2.next()) {
+                String divisionID = rs2.getString("Division_ID");
+                String division = rs2.getString("Division");
+                String concatenatedDivisionString = divisionID + " " + division;
+                stateOptions.add(concatenatedDivisionString);
+            }
+            stateComboBox.setItems(stateOptions);
+            stateComboBox.getSelectionModel().select(rs.getInt("Division_ID") - 1);
+        }
+        String[] startFullDateTime = appointment.get(5).toString().split(" ");
+        LocalDate startDateText = LocalDate.parse(startFullDateTime[0]);
+        String[] startDateFullTime = startFullDateTime[1].split(":");
+        String startHours = startDateFullTime[0];
+        String startMinutes = startDateFullTime[1];
+        String startSeconds = startDateFullTime[2];
+
+        startDate.setValue(startDateText);
+        startHour.getSelectionModel().select(startHours);
+        startMinute.getSelectionModel().select(startMinutes);
+        startSecond.getSelectionModel().select(startSeconds);
+
+        String[] endFullDateTime = appointment.get(6).toString().split(" ");
+        LocalDate endDateText = LocalDate.parse(endFullDateTime[0]);
+        String[] endDateFullTime = endFullDateTime[1].split(":");
+        String endHours = endDateFullTime[0];
+        String endMinutes = endDateFullTime[1];
+        String endSeconds = endDateFullTime[2];
+
+        endDate.setValue(endDateText);
+        endHour.getSelectionModel().select(endHours);
+        endMinute.getSelectionModel().select(endMinutes);
+        endSecond.getSelectionModel().select(endSeconds);
     }
 
     @Override

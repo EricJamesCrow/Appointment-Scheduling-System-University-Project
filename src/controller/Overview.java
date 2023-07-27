@@ -218,7 +218,7 @@ public class Overview implements Initializable {
         try {
             String sql = "SELECT Appointment_ID, Title, Description, Location, " +
                     "Type, Start as Start_Date_and_Time, End as End_Date_and_Time, Customer_ID, " +
-                    "User_ID from APPOINTMENTS";
+                    "User_ID, Contact_ID from APPOINTMENTS";
             PreparedStatement ps = JDBC.connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
 

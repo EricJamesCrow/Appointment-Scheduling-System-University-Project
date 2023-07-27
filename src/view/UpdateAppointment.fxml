@@ -112,7 +112,7 @@
                </VBox.margin></Label>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Button mnemonicParsing="false" onAction="#onAddAppointment" style="-fx-background-color: #474747; -fx-text-fill: #fff;" text="Save">
+                  <Button mnemonicParsing="false" onAction="#onUpdateAppointment" style="-fx-background-color: #474747; -fx-text-fill: #fff;" text="Save">
                      <HBox.margin>
                         <Insets right="20.0" />
                      </HBox.margin>
