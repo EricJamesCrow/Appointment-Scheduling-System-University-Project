@@ -21,6 +21,8 @@ import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
 public class Overview implements Initializable {
@@ -144,7 +146,7 @@ public class Overview implements Initializable {
                 ps.setString(1, customerId);
                 ps.executeUpdate();
                 buildCustomerData();
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setContentText("Customer "+customerId+" deleted!");
                 alert.showAndWait();
             }
@@ -207,7 +209,7 @@ public class Overview implements Initializable {
                         "User_ID, Contact_ID from APPOINTMENTS";
             }
             buildAppointmentsData(sql3);
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setContentText("Appointment "+appointmentId+" deleted!\nType of appointment: "+appointmentType);
             alert.showAndWait();
         } catch(NullPointerException e) {
