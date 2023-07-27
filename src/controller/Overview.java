@@ -1,6 +1,7 @@
 package controller;
 
 import helper.JDBC;
+import helper.TimeZones;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -18,11 +19,15 @@ import javafx.scene.control.TableView;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
 public class Overview implements Initializable {
@@ -162,6 +167,26 @@ public class Overview implements Initializable {
         stage.show();
     }
 
+    public void onActionUpdateAppointment(ActionEvent actionEvent) throws IOException {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("../view/UpdateAppointment.fxml"));
+            loader.load();
+            UpdateAppointment UAController = loader.getController();
+            UAController.sendAppointment((ObservableList) appointmentsTableView.getSelectionModel().getSelectedItem());
+
+            stage = (Stage)((Button)actionEvent.getSource()).getScene().getWindow();
+            Parent scene = loader.getRoot();
+            stage.setScene(new Scene(scene));
+            stage.show();
+        } catch(NullPointerException | SQLException e) {
+            System.out.println(e);
+            Alert alert2 = new Alert(Alert.AlertType.ERROR);
+            alert2.setContentText("Must select an appointment to update");
+            alert2.showAndWait();
+        }
+    }
+
     public void onActionDeleteAppointment(ActionEvent actionEvent) throws SQLException {
         try {
             ObservableList appointments = (ObservableList) appointmentsTableView.getSelectionModel().getSelectedItem();
@@ -221,6 +246,10 @@ public class Overview implements Initializable {
                 ObservableList<String> row = FXCollections.observableArrayList();
                 for (int i = 1; i <= rs.getMetaData().getColumnCount(); i++) {
                     //Iterate Column
+                    if(i == 6 || i == 7) {
+                        row.add(TimeZones.utcToLocal(rs.getString(i)));
+                        continue;
+                    }
                     row.add(rs.getString(i));
                 }
                 appointmentsData.add(row);

@@ -19,6 +19,9 @@ import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
 public class AddAppointment implements Initializable {
@@ -26,16 +29,19 @@ public class AddAppointment implements Initializable {
     public ComboBox stateComboBox;
     public Label errorMsg;
     public ComboBox contactComboBox;
-    public TextField customerId;
     public TextField userId;
     public TextField title;
     public TextField description;
     public TextField type;
     public DatePicker startDate;
     public DatePicker endDate;
-    public TextField startTime;
-    public TextField endTime;
     public ComboBox customerIdComboBox;
+    public ComboBox startHour;
+    public ComboBox endHour;
+    public ComboBox startMinute;
+    public ComboBox endMinute;
+    public ComboBox startSecond;
+    public ComboBox endSecond;
     private ObservableList<String> countryOptions = FXCollections.observableArrayList("U.S.", "UK", "Canada");
     private ObservableList<String> customerOptions = FXCollections.observableArrayList();
     private ObservableList<String> stateOptions = FXCollections.observableArrayList();
@@ -107,8 +113,8 @@ public class AddAppointment implements Initializable {
             String typeText = type.getText();
             String startDateText = startDate.getValue().toString();
             String endDateText = endDate.getValue().toString();
-            String startTimeText = startTime.getText();
-            String endTimeText = endTime.getText();
+            String startTimeText = startHour.getValue()+":"+startMinute.getValue()+":"+startSecond.getValue();
+            String endTimeText = endHour.getValue()+":"+endMinute.getValue()+":"+endSecond.getValue();
             int customerIdText = Integer.parseInt(customerIdComboBox.getValue().toString().split(" ", 2)[0]);
             int userIdText = Integer.parseInt(userId.getText());
             int contactIdText = Integer.parseInt(contactComboBox.getValue().toString().split(" ", 2)[0]);
@@ -125,12 +131,20 @@ public class AddAppointment implements Initializable {
                 errorMsg.setText("Cannot schedule an appointment that overlaps with another.");
                 return;
             }
+            boolean checkBusinessHours = TimeZones.checkBusinessHours(start, end);
+            if (!checkBusinessHours) {
+                errorMsg.setVisible(true);
+                errorMsg.setText("Cannot schedule an appointment outside of business hours.");
+                return;
+            }
+            String startDateTime = TimeZones.localToUTC(TimeZones.convertToLocal(start));
+            String endDateTime = TimeZones.localToUTC(TimeZones.convertToLocal(end));
             ps.setString(1, titleText);
             ps.setString(2, descriptionText);
             ps.setString(3, location);
             ps.setString(4, typeText);
-            ps.setString(5, start);
-            ps.setString(6, end);
+            ps.setString(5, startDateTime);
+            ps.setString(6, endDateTime);
             ps.setInt(7, customerIdText);
             ps.setInt(8, userIdText);
             ps.setInt(9, contactIdText);
@@ -141,7 +155,7 @@ public class AddAppointment implements Initializable {
                 stage.setScene(new Scene(scene));
                 stage.show();
             }
-        } catch (NullPointerException e) {
+        } catch (NullPointerException | ParseException e) {
             errorMsg.setVisible(true);
         }
     }
@@ -161,6 +175,18 @@ public class AddAppointment implements Initializable {
             addUsers();
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        }
+        for(int i=0; i <= 59; i++) {
+            String formattedNumber = String.format("%02d", i);
+            startSecond.getItems().add(formattedNumber);
+            startMinute.getItems().add(formattedNumber);
+            endSecond.getItems().add(formattedNumber);
+            endMinute.getItems().add(formattedNumber);
+        }
+        for(int i=1; i <= 24; i++) {
+            String formattedNumber = String.format("%02d", i);
+            startHour.getItems().add(formattedNumber);
+            endHour.getItems().add(formattedNumber);
         }
         errorMsg.setVisible(false);
     }

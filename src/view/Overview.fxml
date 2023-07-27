@@ -133,7 +133,7 @@
                               <Insets right="10.0" />
                            </HBox.margin>
                         </Button>
-                        <Button fx:id="updateApptBtn" mnemonicParsing="false" style="-fx-background-color: #474747; -fx-text-fill: #fff;" text="Update Appointment" />
+                        <Button fx:id="updateApptBtn" mnemonicParsing="false" onAction="#onActionUpdateAppointment" style="-fx-background-color: #474747; -fx-text-fill: #fff;" text="Update Appointment" />
                         <Button fx:id="deleteApptBtn" mnemonicParsing="false" onAction="#onActionDeleteAppointment" style="-fx-background-color: #474747; -fx-text-fill: #fff;" text="Delete Appointment">
                            <HBox.margin>
                               <Insets left="10.0" right="10.0" />

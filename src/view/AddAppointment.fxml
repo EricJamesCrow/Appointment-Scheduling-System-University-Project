@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="600.0" style="-fx-background-color: #202020;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AddAppointment">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" style="-fx-background-color: #202020;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AddAppointment">
     <center>
         <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
             <children>
@@ -16,7 +16,7 @@
                 </Label>
                 <Region prefHeight="22.0" prefWidth="600.0" />
                 <GridPane alignment="CENTER" hgap="10" vgap="10">
-                    <Label text="Customer ID" textFill="WHITE" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                    <Label text="Customer ID" textFill="WHITE" GridPane.columnIndex="0">
                         <font>
                             <Font name="Roboto" size="18.0" />
                         </font>
@@ -73,20 +73,26 @@
                </Label>
                <DatePicker fx:id="startDate" GridPane.columnIndex="1" GridPane.rowIndex="7" />
                <DatePicker fx:id="endDate" layoutX="253.0" layoutY="261.0" GridPane.columnIndex="1" GridPane.rowIndex="8" />
-               <TextField fx:id="startTime" promptText="HH:MM:SS" GridPane.columnIndex="2" GridPane.rowIndex="7" />
-               <TextField fx:id="endTime" layoutX="437.0" layoutY="261.0" promptText="HH:MM:SS" GridPane.columnIndex="2" GridPane.rowIndex="8" />
                <ComboBox fx:id="customerIdComboBox" prefWidth="150.0" GridPane.columnIndex="1" />
+               <ComboBox fx:id="startHour" prefWidth="150.0" promptText="HH" GridPane.columnIndex="2" GridPane.rowIndex="7" />
+               <ComboBox fx:id="endHour" layoutX="427.0" layoutY="261.0" prefWidth="150.0" promptText="HH" GridPane.columnIndex="2" GridPane.rowIndex="8" />
+               <ComboBox fx:id="startMinute" layoutX="427.0" layoutY="261.0" prefWidth="150.0" promptText="MM" GridPane.columnIndex="3" GridPane.rowIndex="7" />
+               <ComboBox fx:id="endMinute" layoutX="537.0" layoutY="261.0" prefWidth="150.0" promptText="MM" GridPane.columnIndex="3" GridPane.rowIndex="8" />
+               <ComboBox fx:id="startSecond" layoutX="537.0" layoutY="261.0" prefWidth="150.0" promptText="SS" GridPane.columnIndex="4" GridPane.rowIndex="7" />
+               <ComboBox fx:id="endSecond" layoutX="537.0" layoutY="297.0" prefWidth="150.0" promptText="SS" GridPane.columnIndex="4" GridPane.rowIndex="8" />
                <columnConstraints>
                   <ColumnConstraints />
                   <ColumnConstraints />
                   <ColumnConstraints minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints minWidth="10.0" prefWidth="100.0" />
                </columnConstraints>
                <rowConstraints>
-                  <RowConstraints />
-                  <RowConstraints />
-                  <RowConstraints />
-                  <RowConstraints />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" />
+                  <RowConstraints />
+                  <RowConstraints />
+                  <RowConstraints />
+                  <RowConstraints />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" />
