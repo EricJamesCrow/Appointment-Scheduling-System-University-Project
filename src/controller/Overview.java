@@ -158,6 +158,13 @@ public class Overview implements Initializable {
         }
     }
 
+    public void onActionDisplayReports(ActionEvent actionEvent) throws IOException {
+        stage = (Stage)((Button)actionEvent.getSource()).getScene().getWindow();
+        scene = FXMLLoader.load(getClass().getResource("../view/Reports.fxml"));
+        stage.setScene(new Scene(scene));
+        stage.show();
+    }
+
     public void onActionAddAppointment(ActionEvent actionEvent) throws IOException {
         stage = (Stage)((Button)actionEvent.getSource()).getScene().getWindow();
         scene = FXMLLoader.load(getClass().getResource("../view/AddAppointment.fxml"));

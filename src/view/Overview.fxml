@@ -18,7 +18,7 @@
                </HBox.margin>
             </Label>
             <Region HBox.hgrow="ALWAYS" />
-            <Button fx:id="reportsBtn" mnemonicParsing="false" style="-fx-background-color: #474747; -fx-text-fill: #fff;" text="Reports">
+            <Button fx:id="reportsBtn" mnemonicParsing="false" onAction="#onActionDisplayReports" style="-fx-background-color: #474747; -fx-text-fill: #fff;" text="Reports">
                <HBox.margin>
                   <Insets right="10.0" />
                </HBox.margin>
