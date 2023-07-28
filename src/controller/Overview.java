@@ -68,6 +68,12 @@ public class Overview implements Initializable {
     /**
      * Populates the customer table view with data from the customer table in the database
      * Source: https://blog.ngopal.com.np/2011/10/19/dyanmic-tableview-data-from-database/
+     * LAMBDA: the lambda function simplifies the setCellValueFactory setup for the TableColumn, making it
+     * more concise and easier to read, as well as maintain.
+     * The original code was: col.setCellValueFactory(new Callback<CellDataFeatures<ObservableList, String>, ObservableValue<String>>() {
+     *                         public ObservableValue<String> call(CellDataFeatures<ObservableList, String> param) {
+     *                            return new SimpleStringProperty(param.getValue().get(j).toString());
+     *                         }
      */
     public void buildCustomerData() {
         customersData = FXCollections.observableArrayList();
@@ -77,37 +83,26 @@ public class Overview implements Initializable {
             PreparedStatement ps = JDBC.connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
 
-            /**
-             * ********************************
-             * TABLE COLUMN ADDED DYNAMICALLY *
-             *********************************
-             */
             for (int i = 0; i < rs.getMetaData().getColumnCount(); i++) {
-                //We are using non property style for making dynamic table
                 final int j = i;
                 TableColumn col = new TableColumn(rs.getMetaData().getColumnName(i + 1));
+                /**
+                 * LAMBDA
+                 */
                 col.setCellValueFactory((Callback<TableColumn.CellDataFeatures<ObservableList, String>, ObservableValue<String>>) param -> new SimpleStringProperty(param.getValue().get(j).toString()));
 
                 customersTableView.getColumns().addAll(col);
             }
 
-            /**
-             * ******************************
-             * Data added to ObservableList *
-             *******************************
-             */
             while (rs.next()) {
-                //Iterate Row
                 ObservableList<String> row = FXCollections.observableArrayList();
                 for (int i = 1; i <= rs.getMetaData().getColumnCount(); i++) {
-                    //Iterate Column
                     row.add(rs.getString(i));
                 }
                 customersData.add(row);
 
             }
 
-            //FINALLY ADDED TO TableView
             customersTableView.setItems(customersData);
         } catch (Exception e) {
             e.printStackTrace();
@@ -308,6 +303,12 @@ public class Overview implements Initializable {
      * Populates the appointments table view from the appointments table using the provided
      * sql statement
      * Source: https://blog.ngopal.com.np/2011/10/19/dyanmic-tableview-data-from-database/
+     * LAMBDA: the lambda function simplifies the setCellValueFactory setup for the TableColumn, making it
+     * more concise and easier to read, as well as maintain.
+     * The original code was: col.setCellValueFactory(new Callback<CellDataFeatures<ObservableList, String>, ObservableValue<String>>() {
+     *                         public ObservableValue<String> call(CellDataFeatures<ObservableList, String> param) {
+     *                            return new SimpleStringProperty(param.getValue().get(j).toString());
+     *                         }
      * @param sql
      */
     public void buildAppointmentsData(String sql) {
@@ -317,30 +318,20 @@ public class Overview implements Initializable {
             PreparedStatement ps = JDBC.connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
 
-            /**
-             * ********************************
-             * TABLE COLUMN ADDED DYNAMICALLY *
-             *********************************
-             */
             for (int i = 0; i < rs.getMetaData().getColumnCount(); i++) {
-                //We are using non property style for making dynamic table
                 final int j = i;
                 TableColumn col = new TableColumn(rs.getMetaData().getColumnName(i + 1));
+                /**
+                 * LAMBDA
+                 */
                 col.setCellValueFactory((Callback<TableColumn.CellDataFeatures<ObservableList, String>, ObservableValue<String>>) param -> new SimpleStringProperty(param.getValue().get(j).toString()));
 
                 appointmentsTableView.getColumns().addAll(col);
             }
 
-            /**
-             * ******************************
-             * Data added to ObservableList *
-             *******************************
-             */
             while (rs.next()) {
-                //Iterate Row
                 ObservableList<String> row = FXCollections.observableArrayList();
                 for (int i = 1; i <= rs.getMetaData().getColumnCount(); i++) {
-                    //Iterate Column
                     if(i == 6 || i == 7) {
                         row.add(TimeZones.utcToLocal(rs.getString(i)));
                         continue;
@@ -351,7 +342,6 @@ public class Overview implements Initializable {
 
             }
 
-            //FINALLY ADDED TO TableView
             appointmentsTableView.setItems(appointmentsData);
         } catch (Exception e) {
             e.printStackTrace();
@@ -360,6 +350,8 @@ public class Overview implements Initializable {
     }
     /**
      * initializes the controller by populating the Table Views.
+     * LAMBDA: These lambda expressions simplify the code by implementing
+     * the event handling logic inline.
      * @param url
      * @param resourceBundle
      */
@@ -374,6 +366,9 @@ public class Overview implements Initializable {
         overviewBtns = FXCollections.observableArrayList(reportsBtn, addCustomerBtn, updateCustomerBtn, deleteCustomerBtn, addApptBtn, updateApptBtn, deleteApptBtn);
 
         for(Button button : overviewBtns) {
+            /**
+             * LAMBDA
+             */
             button.setOnMouseEntered(e -> {
                 button.setStyle("-fx-background-color: #5E5E5E; cursor: pointer;");
                 button.setCursor(Cursor.HAND);

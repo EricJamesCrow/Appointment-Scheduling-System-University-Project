@@ -64,7 +64,7 @@ public class LoginForm implements Initializable {
     /**
      * this method is triggered when the user attempts to log in. It checks to see if the user is valid
      * and then writes whether the login attempt was successful to a text file named login_activity.txt.
-     * Source: https://www.w3schools.com/java/java_files_create.asp
+     * Source for writing files: https://www.w3schools.com/java/java_files_create.asp
      * @params actionEvent
      * @throws IOException
      * @throws SQLException
@@ -140,6 +140,8 @@ public class LoginForm implements Initializable {
     }
     /**
      * initializes the controller
+     * LAMBDA: These lambda expressions simplify the code by implementing
+     * the event handling logic inline.
      * @param url
      * @param resourceBundle
      */
@@ -158,6 +160,9 @@ public class LoginForm implements Initializable {
         }
         ZoneId zoneId = ZoneId.systemDefault();
         zoneIdText.setText(zoneId.toString());
+        /**
+         * LAMBDA
+         */
         loginBtn.setOnMouseEntered(e -> {
                 loginBtn.setStyle("-fx-background-color: #5E5E5E; cursor: pointer;");
                 loginBtn.setCursor(Cursor.HAND);
