@@ -22,26 +22,45 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.ResourceBundle;
-
+/**
+ * This class is a controller for the Reports view.
+ * It contains the methods buildAppointmentsData, onActionFilterTypes, onActionFilterMonths, onActionFilterContacts,
+ * onActionFilterCustomers, addTypes, addMonths, addContacts, addCustomers, onActionDisplayMenu and initialize
+ */
 public class Reports implements Initializable {
+    /**
+     * ComboBox elements for the gui
+     */
     public ComboBox appointmentsByTypeComboBox;
-    public Label numberOfAppointmentsByTypeLabel;
-    public TableView appointmentsByTypeTableView;
     public ComboBox appointmentsByMonthComboBox;
-    public Label numberOfAppointmentsByMonthLabel;
-    public TableView appointmentsByMonthTableView;
     public ComboBox appointmentsByContactComboBox;
-    public Label numberOfAppointmentsByContactLabel;
-    public TableView appointmentsByContactTableView;
     public ComboBox appointmentsByCustomerComboBox;
+    /**
+     * Label elements for the gui
+     */
+    public Label numberOfAppointmentsByTypeLabel;
+    public Label numberOfAppointmentsByMonthLabel;
+    public Label numberOfAppointmentsByContactLabel;
     public Label numberOfAppointmentsByCustomerLabel;
+    /**
+     * TableView elements for the gui
+     */
+    public TableView appointmentsByTypeTableView;
+    public TableView appointmentsByMonthTableView;
+    public TableView appointmentsByContactTableView;
     public TableView appointmentsByCustomerTableView;
+    /**
+     * ObservableLists used for populating ComboBoxes and TableViews
+     */
     private ObservableList<ObservableList> appointmentsData;
     private ObservableList<String> contactOptions = FXCollections.observableArrayList();
     private ObservableList<String> monthOptions = FXCollections.observableArrayList("JANUARY", "FEBRUARY", "MARCH", "APRIL",
             "MAY", "JUNE", "JULY", "AUGUST", "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER");
     private ObservableList<String> typeOptions = FXCollections.observableArrayList();
     private ObservableList<String> customerOptions = FXCollections.observableArrayList();
+    /**
+     * Initializes the calendar with the current date.
+     */
     Calendar cal=Calendar.getInstance();
     /**
      * the stage the application is running in
@@ -51,6 +70,12 @@ public class Reports implements Initializable {
      * the ui to be displayed
      */
     Parent scene;
+    /**
+     * this method is triggered when the go back button is clicked.
+     * it returns the user to the main menu.
+     * @param actionEvent
+     * @throws IOException
+     */
     public void onActionDisplayMenu(ActionEvent actionEvent) throws IOException {
         stage = (Stage)((Button)actionEvent.getSource()).getScene().getWindow();
         scene = FXMLLoader.load(getClass().getResource("../view/Overview.fxml"));
@@ -58,6 +83,12 @@ public class Reports implements Initializable {
         stage.show();
     }
 
+    /**
+     * builds the table view with the provided SQL queries to the appointments table.
+     * @param sql
+     * @param table
+     * @param label
+     */
     public void buildAppointmentsData(String sql, TableView table, Label label) {
         /**
          *
@@ -111,34 +142,55 @@ public class Reports implements Initializable {
             System.out.println("Error on Building Appointments Data");
         }
     }
-    public void onActionFilterTypes(ActionEvent actionEvent) throws SQLException {
+    /**
+     * triggered by the types combo box, populates table view with appropriate values
+     * @param actionEvent
+     */
+    public void onActionFilterTypes(ActionEvent actionEvent) {
         String selectedType = appointmentsByTypeComboBox.getValue().toString();
         String sql = "SELECT Appointment_ID, Title, Description, Location, " +
                 "Type, Start as Start_Date_and_Time, End as End_Date_and_Time, Customer_ID, " +
                 "User_ID, Contact_ID from APPOINTMENTS WHERE Type = '"+selectedType+"'";
         buildAppointmentsData(sql, appointmentsByTypeTableView, numberOfAppointmentsByTypeLabel);
     }
-    public void onActionFilterMonths(ActionEvent actionEvent) throws SQLException {
+    /**
+     * triggered by the months combo box, populates table view with appropriate values
+     * @param actionEvent
+     */
+    public void onActionFilterMonths(ActionEvent actionEvent) {
         int selectedMonth = appointmentsByMonthComboBox.getSelectionModel().getSelectedIndex() + 1;
         String sql = "SELECT Appointment_ID, Title, Description, Location, " +
                 "Type, Start as Start_Date_and_Time, End as End_Date_and_Time, Customer_ID, " +
                 "User_ID, Contact_ID from APPOINTMENTS where month(Start)="+selectedMonth+"";
         buildAppointmentsData(sql, appointmentsByMonthTableView, numberOfAppointmentsByMonthLabel);
     }
-    public void onActionFilterContacts(ActionEvent actionEvent) throws SQLException {
+    /**
+     * triggered by the contacts combo box, populates table view with appropriate values
+     * @param actionEvent
+     */
+    public void onActionFilterContacts(ActionEvent actionEvent) {
         String selectedContact = appointmentsByContactComboBox.getValue().toString().split(" ", 2)[0];
         String sql = "SELECT Appointment_ID, Title, Description, Location, " +
                 "Type, Start as Start_Date_and_Time, End as End_Date_and_Time, Customer_ID, " +
                 "User_ID, Contact_ID from APPOINTMENTS WHERE Contact_ID = "+selectedContact;
         buildAppointmentsData(sql, appointmentsByContactTableView, numberOfAppointmentsByContactLabel);
     }
-    public void onActionFilterCustomers(ActionEvent actionEvent) throws SQLException {
+    /**
+     * triggered by the customer combo box, populates table view with appropriate values
+     * @param actionEvent
+     */
+    public void onActionFilterCustomers(ActionEvent actionEvent) {
         String customerId = (appointmentsByCustomerComboBox.getValue().toString()).split(" ", 2)[0];
         String sql = "SELECT Appointment_ID, Title, Description, Location, " +
                 "Type, Start as Start_Date_and_Time, End as End_Date_and_Time, Customer_ID, " +
                 "User_ID, Contact_ID from APPOINTMENTS WHERE Customer_ID = "+customerId;
         buildAppointmentsData(sql, appointmentsByCustomerTableView, numberOfAppointmentsByCustomerLabel);
     }
+    /**
+     * the initialize method triggers this function which adds the types from the database
+     * to the combobox.
+     * @throws SQLException
+     * */
     public void addTypes() throws SQLException {
         try {
             String sql = "SELECT DISTINCT Type FROM Appointments";
@@ -155,10 +207,18 @@ public class Reports implements Initializable {
             System.out.println("Error on adding types data");
         }
     }
+    /**
+     * the initialize method triggers this function which adds the months to the combobox.
+     * */
     public void addMonths() {
         appointmentsByMonthComboBox.setItems(monthOptions);
         appointmentsByMonthComboBox.getSelectionModel().select(cal.get(Calendar.MONTH));
     }
+    /**
+     * the initialize method triggers this function which adds the contacts from the database
+     * to the combobox.
+     * @throws SQLException
+     * */
     public void addContacts() throws SQLException {
         try {
             String sql = "SELECT Contact_ID, Contact_Name FROM contacts";
@@ -177,6 +237,11 @@ public class Reports implements Initializable {
             System.out.println("Error on adding contacts data");
         }
     }
+    /**
+     * the initialize method triggers this function which adds the customers from the database to
+     * the combobox.
+     * @throws SQLException
+     * */
     public void addCustomers() throws SQLException {
         try {
             String sql = "SELECT Customer_ID, Customer_Name FROM customers";
@@ -195,7 +260,11 @@ public class Reports implements Initializable {
             System.out.println("Error on adding contacts data");
         }
     }
-
+    /**
+     * initializes the controller by populating the comboBoxes and Table Views.
+     * @param url
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         String sql1 = "SELECT Appointment_ID, Title, Description, Location, " +

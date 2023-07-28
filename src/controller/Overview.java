@@ -21,13 +21,23 @@ import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
-
+/**
+ * This class is a controller for the Overview view.
+ * It contains the methods buildCustomerData, onActionDisplayAddCustomer, onActionDisplayModifyCustomer,
+ * onActionDeleteCustomer, onActionDisplayReports, onActionAddAppointment, onActionUpdateAppointment,
+ * onActionDeleteAppointment, onActionViewAppointmentsByMonth, onActionViewAppointmentsByWeek,
+ * onActionViewAllAppointmentsData, buildAppointmentsData and initialize
+ */
 public class Overview implements Initializable {
+    /**
+     * TableView elements for the gui
+     */
     public TableView customersTableView;
     public TableView appointmentsTableView;
+    /**
+     * Button elements for the gui
+     */
     public Button reportsBtn;
     public Button addCustomerBtn;
     public Button updateCustomerBtn;
@@ -35,9 +45,15 @@ public class Overview implements Initializable {
     public Button addApptBtn;
     public Button updateApptBtn;
     public Button deleteApptBtn;
+    /**
+     * RadioButton elements for the gui
+     */
     public RadioButton viewAllRadioBtn;
     public RadioButton byWeekRadioBtn;
     public RadioButton byMonthRadioBtn;
+    /**
+     * ObservableLists used for populating ComboBoxes and TableViews
+     */
     private ObservableList<ObservableList> customersData;
     private ObservableList<ObservableList> appointmentsData;
     private ObservableList<Button> overviewBtns;;
@@ -49,13 +65,11 @@ public class Overview implements Initializable {
      * the ui to be displayed
      */
     Parent scene;
-
-    //CONNECTION DATABASE
+    /**
+     * Populates the customer table view with data from the customer table in the database
+     * Source: https://blog.ngopal.com.np/2011/10/19/dyanmic-tableview-data-from-database/
+     */
     public void buildCustomerData() {
-        /**
-         *
-         *  Source: https://blog.ngopal.com.np/2011/10/19/dyanmic-tableview-data-from-database/
-         *  */
         customersData = FXCollections.observableArrayList();
         try {
             String sql = "SELECT Customer_ID as ID, Customer_Name as Name, " +
@@ -100,14 +114,22 @@ public class Overview implements Initializable {
             System.out.println("Error on Building Customer Data");
         }
     }
-
+    /**
+     * Displays the add customer view
+     * @param actionEvent
+     * @throws IOException
+     */
     public void onActionDisplayAddCustomer(ActionEvent actionEvent) throws IOException {
         stage = (Stage)((Button)actionEvent.getSource()).getScene().getWindow();
         scene = FXMLLoader.load(getClass().getResource("../view/AddCustomer.fxml"));
         stage.setScene(new Scene(scene));
         stage.show();
     }
-
+    /**
+     * Displays the modify customer view
+     * @param actionEvent
+     * @throws IOException
+     */
     public void onActionDisplayModifyCustomer(ActionEvent actionEvent) throws IOException {
         try {
             FXMLLoader loader = new FXMLLoader();
@@ -127,7 +149,11 @@ public class Overview implements Initializable {
             alert2.showAndWait();
         }
     }
-
+    /**
+     * Deletes the selected customer from the database
+     * @param actionEvent
+     * @throws SQLException
+     */
     public void onActionDeleteCustomer(ActionEvent actionEvent) throws SQLException{
         try {
             ObservableList customers = (ObservableList) customersTableView.getSelectionModel().getSelectedItem();
@@ -157,21 +183,33 @@ public class Overview implements Initializable {
             alert.showAndWait();
         }
     }
-
+    /**
+     * Displays the reports view
+     * @param actionEvent
+     * @throws IOException
+     */
     public void onActionDisplayReports(ActionEvent actionEvent) throws IOException {
         stage = (Stage)((Button)actionEvent.getSource()).getScene().getWindow();
         scene = FXMLLoader.load(getClass().getResource("../view/Reports.fxml"));
         stage.setScene(new Scene(scene));
         stage.show();
     }
-
+    /**
+     * Displays the add appointment view
+     * @param actionEvent
+     * @throws IOException
+     */
     public void onActionAddAppointment(ActionEvent actionEvent) throws IOException {
         stage = (Stage)((Button)actionEvent.getSource()).getScene().getWindow();
         scene = FXMLLoader.load(getClass().getResource("../view/AddAppointment.fxml"));
         stage.setScene(new Scene(scene));
         stage.show();
     }
-
+    /**
+     * Displays the update appointment view
+     * @param actionEvent
+     * @throws IOException
+     */
     public void onActionUpdateAppointment(ActionEvent actionEvent) throws IOException {
         try {
             FXMLLoader loader = new FXMLLoader();
@@ -191,7 +229,11 @@ public class Overview implements Initializable {
             alert2.showAndWait();
         }
     }
-
+    /**
+     * Deletes the selected appointment from the database
+     * @param actionEvent
+     * @throws SQLException
+     */
     public void onActionDeleteAppointment(ActionEvent actionEvent) throws SQLException {
         try {
             ObservableList appointments = (ObservableList) appointmentsTableView.getSelectionModel().getSelectedItem();
@@ -226,6 +268,10 @@ public class Overview implements Initializable {
             alert.showAndWait();
         }
     }
+    /**
+     * calls buildAppointmentsData with a SQL statement that grabs appointments by the current month
+     * @param actionEvent
+     */
     public void onActionViewAppointmentsByMonth(ActionEvent actionEvent) {
         /**
          * Source: https://ubiq.co/database-blog/how-to-get-current-week-data-in-mysql/#:~:text=It%20is%20very%20easy%20to,of%20current%20week%20in%20MySQL.&text=In%20the%20above%20query%2C%20we,week%20number%20of%20today's%20day.
@@ -235,6 +281,10 @@ public class Overview implements Initializable {
                 "User_ID, Contact_ID from APPOINTMENTS where month(Start)=month(now());";
         buildAppointmentsData(sql);
     }
+    /**
+     * calls buildAppointmentsData with a SQL statement that grabs appointments by the current week
+     * @param actionEvent
+     */
     public void onActionViewAppointmentsByWeek(ActionEvent actionEvent) {
         /**
          * Source: https://ubiq.co/database-blog/how-to-get-current-week-data-in-mysql/#:~:text=It%20is%20very%20easy%20to,of%20current%20week%20in%20MySQL.&text=In%20the%20above%20query%2C%20we,week%20number%20of%20today's%20day.
@@ -244,19 +294,23 @@ public class Overview implements Initializable {
                 "User_ID, Contact_ID from APPOINTMENTS where week(Start)=week(now());";
         buildAppointmentsData(sql);
     }
-
+    /**
+     * calls buildAppointmentsData with a SQL statement that grabs all appointments
+     * @param actionEvent
+     */
     public void onActionViewAllAppointmentsData(ActionEvent actionEvent) {
         String sql = "SELECT Appointment_ID, Title, Description, Location, " +
                 "Type, Start as Start_Date_and_Time, End as End_Date_and_Time, Customer_ID, " +
                 "User_ID, Contact_ID from APPOINTMENTS";
         buildAppointmentsData(sql);
     }
-
+    /**
+     * Populates the appointments table view from the appointments table using the provided
+     * sql statement
+     * Source: https://blog.ngopal.com.np/2011/10/19/dyanmic-tableview-data-from-database/
+     * @param sql
+     */
     public void buildAppointmentsData(String sql) {
-        /**
-         *
-         *  Source: https://blog.ngopal.com.np/2011/10/19/dyanmic-tableview-data-from-database/
-         *  */
         appointmentsTableView.getColumns().clear();
         appointmentsData = FXCollections.observableArrayList();
         try {
@@ -304,7 +358,11 @@ public class Overview implements Initializable {
             System.out.println("Error on Building Appointments Data");
         }
     }
-
+    /**
+     * initializes the controller by populating the Table Views.
+     * @param url
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         buildCustomerData();

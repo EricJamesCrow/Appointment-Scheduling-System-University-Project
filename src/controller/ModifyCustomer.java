@@ -20,18 +20,40 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
-
+/**
+ * This class is a controller for the ModifyCustomer view.
+ * It contains the methods sendCustomer, onUpdateCustomer, onActionAddFirstLevelDivisions,
+ * onActionDisplayMenu and initialize
+ */
 public class ModifyCustomer implements Initializable {
+    /**
+     * String element for the gui
+     */
     public String customerId;
-    public TextField customerIdDisabledTextField;
+    /**
+     * integer for the country's id
+     */
     private int countryId;
+    /**
+     * Label element for the gui
+     */
+    public Label errorMsg;
+    /**
+     * TextField elements for the gui
+     */
+    public TextField customerIdDisabledTextField;
     public TextField customerName;
     public TextField customerAddress;
     public TextField customerPostalCode;
     public TextField customerPhone;
+    /**
+     * ComboBox elements for the gui
+     */
     public ComboBox countryComboBox;
     public ComboBox stateComboBox;
-    public Label errorMsg;
+    /**
+     * ObservableLists used for populating ComboBoxes
+     */
     private ObservableList<String> countryOptions = FXCollections.observableArrayList("U.S.", "UK", "Canada");
     private ObservableList<String> stateOptions = FXCollections.observableArrayList();
     /**
@@ -42,14 +64,24 @@ public class ModifyCustomer implements Initializable {
      * the ui to be displayed
      */
     Parent scene;
-
+    /**
+     * this method is triggered when the cancel button is clicked.
+     * it returns the user to the main menu.
+     * @param actionEvent
+     * @throws IOException
+     */
     public void onActionDisplayMenu(ActionEvent actionEvent) throws IOException {
         stage = (Stage)((Button)actionEvent.getSource()).getScene().getWindow();
         scene = FXMLLoader.load(getClass().getResource("../view/Overview.fxml"));
         stage.setScene(new Scene(scene));
         stage.show();
     }
-
+    /**
+     * this method is triggered when the country combobox is changed.
+     * it grabs the states from the selected country and populates the state combobox.
+     * @param actionEvent
+     * @throws IOException
+     */
     public void onActionAddFirstLevelDivisions(ActionEvent actionEvent) throws SQLException {
         stateOptions.clear();
         String countryId = Integer.toString(countryComboBox.getSelectionModel().getSelectedIndex() + 1);
@@ -65,7 +97,12 @@ public class ModifyCustomer implements Initializable {
         }
         stateComboBox.setItems(stateOptions);
     }
-
+    /**
+     * this method is triggered when the save button is clicked.
+     * it performs error checks and then updates the modified customer to the database.
+     * @param actionEvent
+     * @throws SQLException
+     */
     public void onUpdateCustomer(ActionEvent actionEvent) throws SQLException {
         String sql = "UPDATE CUSTOMERS SET Customer_Name = ?, Address = ?, Postal_Code = ?, Phone = ?, Division_ID = ? " +
                 "WHERE Customer_ID= ?";
@@ -98,7 +135,11 @@ public class ModifyCustomer implements Initializable {
             errorMsg.setVisible(true);
         }
     }
-
+    /**
+     *Overview.onActionDisplayModifyCustomer() calls this function to send the selected item
+     * to ModifyCustomer's view
+     * @param customer
+     */
     public void sendCustomer(ObservableList customer) throws SQLException {
         customerId = customer.get(0).toString();
         customerIdDisabledTextField.setText(customerId);
@@ -137,7 +178,11 @@ public class ModifyCustomer implements Initializable {
             }
         }
     }
-
+    /**
+     * initializes the controller by populating the comboBox
+     * @param url
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         countryComboBox.setItems(countryOptions);

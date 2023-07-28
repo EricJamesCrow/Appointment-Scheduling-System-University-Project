@@ -21,18 +21,35 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
-
+/**
+ * This class is a controller for the UpdateAppointment view.
+ * It contains the methods onUpdateAppointment, sendAppointment, addUsers, addContacts, onActionAddFirstLevelDivisions,
+ * onActionDisplayMenu and initialize
+ */
 public class UpdateAppointment implements Initializable {
-    public ComboBox countryComboBox;
-    public ComboBox stateComboBox;
+    /**
+     * Label element for the gui
+     */
     public Label errorMsg;
-    public ComboBox contactComboBox;
+    /**
+     * TextField elements for the gui
+     */
     public TextField userId;
     public TextField title;
     public TextField description;
     public TextField type;
+    public TextField appointmentIdTextBox;
+    /**
+     * DatePicker elements for the gui
+     */
     public DatePicker startDate;
     public DatePicker endDate;
+    /**
+     * ComboBox elements for the gui
+     */
+    public ComboBox countryComboBox;
+    public ComboBox stateComboBox;
+    public ComboBox contactComboBox;
     public ComboBox customerIdComboBox;
     public ComboBox startHour;
     public ComboBox endHour;
@@ -40,7 +57,9 @@ public class UpdateAppointment implements Initializable {
     public ComboBox endMinute;
     public ComboBox startSecond;
     public ComboBox endSecond;
-    public TextField appointmentIdTextBox;
+    /**
+     * ObservableLists used for populating ComboBoxes and TableViews
+     */
     private ObservableList<String> countryOptions = FXCollections.observableArrayList("U.S.", "UK", "Canada");
     private ObservableList<String> customerOptions = FXCollections.observableArrayList();
     private ObservableList<String> stateOptions = FXCollections.observableArrayList();
@@ -53,6 +72,12 @@ public class UpdateAppointment implements Initializable {
      * the ui to be displayed
      */
     Parent scene;
+    /**
+     * this method is triggered when the country combobox is changed.
+     * it grabs the states from the selected country and populates the state combobox.
+     * @param actionEvent
+     * @throws IOException
+     */
     public void onActionAddFirstLevelDivisions(ActionEvent actionEvent) throws SQLException {
         stateOptions.clear();
         String countryId = Integer.toString(countryComboBox.getSelectionModel().getSelectedIndex() + 1);
@@ -68,6 +93,11 @@ public class UpdateAppointment implements Initializable {
         }
         stateComboBox.setItems(stateOptions);
     }
+    /**
+     * the initialize method triggers this function. it queries the database and adds contacts to
+     * the appropriate combobox.
+     * @throws SQLException
+     */
     public void addContacts() throws SQLException {
         try {
             String sql = "SELECT Contact_ID, Contact_Name FROM contacts";
@@ -85,6 +115,10 @@ public class UpdateAppointment implements Initializable {
             System.out.println("Error on adding contacts data");
         }
     }
+    /**
+     * the initialize method triggers this function which adds the users from the database to
+     * the combobox.
+     * */
     public void addUsers() {
         try {
             String sql = "SELECT Customer_ID, Customer_Name FROM customers";
@@ -101,6 +135,13 @@ public class UpdateAppointment implements Initializable {
             throw new RuntimeException(e);
         }
     }
+    /**
+     * this method is triggered when the save button is clicked.
+     * it performs error checks and then updates the modified appointment to the database.
+     * @param actionEvent
+     * @throws SQLException
+     * @throws IOException
+     */
     public void onUpdateAppointment(ActionEvent actionEvent) throws SQLException, IOException {
         String sql = "UPDATE APPOINTMENTS SET Title = ?, Description = ?, Location = ?, Type = ?, Start = ?, End = ?, " +
                 "Customer_ID = ?, User_ID = ?, Contact_ID = ? WHERE Appointment_ID = ?";
@@ -160,13 +201,24 @@ public class UpdateAppointment implements Initializable {
             errorMsg.setVisible(true);
         }
     }
+    /**
+     * this method is triggered when the cancel button is clicked.
+     * it returns the user to the main menu.
+     * @param actionEvent
+     * @throws IOException
+     */
     public void onActionDisplayMenu(ActionEvent actionEvent) throws IOException {
         stage = (Stage)((Button)actionEvent.getSource()).getScene().getWindow();
         scene = FXMLLoader.load(getClass().getResource("../view/Overview.fxml"));
         stage.setScene(new Scene(scene));
         stage.show();
     }
-
+    /**
+     *Overview.onActionUpdateAppointment() calls this function to send the selected item
+     * to UpdateAppointment's view
+     * @param appointment
+     * @throws SQLException
+     */
     public void sendAppointment(ObservableList appointment) throws SQLException {
         appointmentIdTextBox.setText(appointment.get(0).toString());
         customerIdComboBox.getSelectionModel().select(Integer.parseInt(appointment.get(7).toString()) - 1);
@@ -221,7 +273,11 @@ public class UpdateAppointment implements Initializable {
         endMinute.getSelectionModel().select(endMinutes);
         endSecond.getSelectionModel().select(endSeconds);
     }
-
+    /**
+     * initializes the controller by populating the comboBoxes
+     * @param url
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         countryComboBox.setItems(countryOptions);
