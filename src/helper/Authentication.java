@@ -6,14 +6,29 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * Class containing a user object and a login method
+ */
 public class Authentication {
-
+    /**
+     * initialize currentUser as null
+     */
     private static User currentUser = null;
-
+    /**
+     * getter for currentUser
+     * @return currentUser
+     */
     public static User getCurrentUser() {
         return currentUser;
     }
-
+    /**
+     * method for logging in using the provided username and password.
+     * Sets currentUser to a new user object if login is successful.
+     * @param userName
+     * @param password
+     * @return
+     * @throws SQLException
+     */
     public static User login(String userName, String password) throws SQLException {
         User user = null;
         String sql = "SELECT * FROM users WHERE User_Name = ? AND Password = ?";
