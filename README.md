@@ -1,5 +1,3 @@
-# README.txt
-
 ## Title and Purpose of the Application
 The application is a GUI-based scheduling desktop application developed for a global consulting organization. It includes functionalities such as login, customer record management, scheduling functionalities, reporting, localization, and advanced exception control. The application adheres to specific business requirements and complies with the guidelines provided in the project rubric.
 
