@@ -1,23 +1,37 @@
-Title: Appointment Scheduling System 
-Purpose: The purpose of this application was to create a globally compatible scheduling system in which
-users from all over the world would be able to easily make and schedule appointments.
-Author: Eric Crow
-Contact: ecrow5@wgu.edu
-Student Application Version: 1.0
-Date: 7/29/2023
-IDE: IntelliJ IDEA 2023.2 (Community Edition)
-JDK: java version "17.0.7" 2023-04-18 LTS
-JavaFX: javafx-sdk-20.0.1
-MySQL Connector: mysql-connector-j-8.1.0
+# README.txt
 
-Directions for how to run the program:
+## Title and Purpose of the Application
+The application is a GUI-based scheduling desktop application developed for a global consulting organization. It includes functionalities such as login, customer record management, scheduling functionalities, reporting, localization, and advanced exception control. The application adheres to specific business requirements and complies with the guidelines provided in the project rubric.
 
-In your IDE, compile the project by clicking build.
-Run the application by clicking on "Run".
+## Demonstration
 
-Description of the additional report:
+## Author, Contact Information, Student Application Version, and Date
+- Author: Eric Crow
+- Contact Information: EricCrow@pm.me
+- Student Application Version: 1.0
+- Date: 7/29/2023
 
-The additional report that is created displays the appointments by each customer.
-Users of the application can filter appointments by customer using the combobox which
-autofills from the data within the customers table in the MySQL database. This makes it
-much easier to find specific customers and their appointments.
+## Integrated Development Environment (IDE) and Versions
+- IDE: IntelliJ IDEA 2023.2 (Community Edition)
+- Full JDK of Version Used: java version "17.0.7" 2023-04-18 LTS
+- JavaFX Version Compatible with JDK Version: javafx-sdk-20.0.1
+- MySQL Connector: mysql-connector-j-8.1.0
+
+## Directions for How to Run the Program
+1. Open the project in the preferred IDE (IntelliJ IDEA Community Edition recommended).
+2. Ensure that JDK, JavaFX SDK, and Scene Builder are installed and configured correctly.
+3. Navigate to the main class and run the program.
+4. Follow the on-screen instructions to interact with the application.
+
+## Description of the Additional Report of Your Choice
+[Provide details about the additional report you chose to include in part A3f of the requirements. Explain what the report shows and why you selected it.]
+
+## MySQL Connector Driver Version Number
+- MySQL Connector Driver Version: mysql-connector-java-[Version Number, e.g. 8.1.23]
+
+## Note
+The application follows the competencies and requirements outlined in the assessment. It demonstrates the ability to create complex applications using advanced Java programming language constructs, implements lambda expressions, manipulates data efficiently, applies localization and date/time APIs, and incorporates advanced exception handling.
+
+---
+
+For any further queries or assistance, please refer to the contact information provided above.
