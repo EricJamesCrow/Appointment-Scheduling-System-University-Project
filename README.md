@@ -6,7 +6,7 @@ Here is a gif demonstrating the application:
 
 ![](https://raw.githubusercontent.com/EricJamesCrow/Appointment-Scheduling-System-University-Project/main/images/project_demo.gif)
 
-## Author, Contact Information, Student Application Version, and Date
+## Author, Student Application Version, and Date
 - Author: Eric Crow
 - Contact Information: EricCrow@pm.me
 - Student Application Version: 1.0
