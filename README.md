@@ -16,7 +16,6 @@ Here is a gif demonstrating the application:
 - IDE: IntelliJ IDEA 2023.2 (Community Edition)
 - Full JDK of Version Used: java version "17.0.7" 2023-04-18 LTS
 - JavaFX Version Compatible with JDK Version: javafx-sdk-20.0.1
-- MySQL Connector: mysql-connector-j-8.1.0
 
 ## Directions for How to Run the Program
 1. Open the project in the preferred IDE (IntelliJ IDEA Community Edition recommended).
@@ -24,11 +23,8 @@ Here is a gif demonstrating the application:
 3. Navigate to the main class and run the program.
 4. Follow the on-screen instructions to interact with the application.
 
-## Description of the Additional Report of Your Choice
-[Provide details about the additional report you chose to include in part A3f of the requirements. Explain what the report shows and why you selected it.]
-
 ## MySQL Connector Driver Version Number
-- MySQL Connector Driver Version: mysql-connector-java-[Version Number, e.g. 8.1.23]
+- MySQL Connector Driver Version: mysql-connector-j-8.1.0
 
 ## Note
 The application follows the competencies and requirements outlined in the assessment. It demonstrates the ability to create complex applications using advanced Java programming language constructs, implements lambda expressions, manipulates data efficiently, applies localization and date/time APIs, and incorporates advanced exception handling.
