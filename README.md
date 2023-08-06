@@ -2,6 +2,9 @@
 The application is a GUI-based scheduling desktop application developed for a global consulting organization. It includes functionalities such as login, customer record management, scheduling functionalities, reporting, localization, and advanced exception control. The application adheres to specific business requirements and complies with the guidelines provided in the project rubric.
 
 ## Demonstration
+Here is a gif demonstrating the application:
+
+![](https://raw.githubusercontent.com/EricJamesCrow/Appointment-Scheduling-System-University-Project/main/images/project_demo.gif)
 
 ## Author, Contact Information, Student Application Version, and Date
 - Author: Eric Crow
